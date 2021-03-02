@@ -16,11 +16,12 @@ export default class Index extends Component {
   componentDidShow () { }
 
   componentDidHide () { }
-
+// keyi 
   render () {
     return (
       <View className='index'>
         <Login/>
+      
       </View>
     )
   }
