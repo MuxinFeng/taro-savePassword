@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import './index.less'
+import './home.less'
 
-import Login from '../../components/login/index'
-// import Home from '../home/home'
 
-export default class Index extends Component {
+class Home extends Component {
 
   componentWillMount () { }
 
@@ -20,12 +18,13 @@ export default class Index extends Component {
 // keyi 
   render () {
     return (
-      <View className='index'>
-        {/* <Home/> */}
-      <div>
-        nihao
-      </div>
+      <View >
+       <div>
+           主页
+       </div>
       </View>
     )
   }
 }
+
+export default <Home/>
