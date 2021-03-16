@@ -3,7 +3,7 @@
   "cloudfunctionRoot": "cloud/functions/",
   "projectname": "taro-savePassword",
   "description": "",
-  "appid": "touristappid",
+  "appid": "wx57c35d4a910901a2",
   "setting": {
     "urlCheck": true,
     "es6": false,
@@ -17,15 +17,22 @@
     "checkInvalidKey": true,
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": false,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
-    "useMultiFrameRuntime": true,
     "bundle": false,
-    "useApiHook": true,
-    "useApiHostProcess": false
+    "useIsolateContext": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": false
   },
   "compileType": "miniprogram",
   "simulatorType": "wechat",

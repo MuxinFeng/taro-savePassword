@@ -1,30 +1,27 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import './home.less'
+// import './index.less'
 
+import Login from '../../components/login/index'
 
-class Home extends Component {
+export default class Index extends Component {
 
-  componentWillMount () { }
+  componentWillMount() { }
 
-  componentDidMount () { }
+  componentDidMount() { }
 
-  componentWillUnmount () { }
+  componentWillUnmount() { }
 
-  componentDidShow () { }
+  componentDidShow() { }
 
-  componentDidHide () { }
-// keyi 
-  render () {
+  componentDidHide() { }
+
+  render() {
     return (
-      <View >
-       <div>
-           主页
-       </div>
+      <View className='index'>
+        <Login />
       </View>
     )
   }
 }
-
-export default <Home/>

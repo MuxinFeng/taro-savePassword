@@ -1,14 +1,19 @@
 export default {
-  pages: ["pages/index/index", "pages/home/home"],
+  pages: [
+  'pages/index/index', 
+
+  'pages/home/home'
+],
   window: {
-    backgroundTextStyle: "light",
-    navigationBarBackgroundColor: "#fff",
-    navigationBarTitleText: "WeChat",
-    navigationBarTextStyle: "black"
+    navigationBarBackgroundColor: '#ffffff',
+    navigationBarTextStyle: 'black',
+    navigationBarTitleText: '彗星密码本',
+    backgroundColor: '#eeeeee',
+    backgroundTextStyle: 'light'
   },
   tabBar: {
-    color: "#333",
-    selectedColor: "#f03d37",
+    color:"#515151",
+    selectedColor: "#f38031",
     backgroundColor: "#fff",
     borderStyle: "black",
     list: [
@@ -19,7 +24,7 @@ export default {
         selectedIconPath: "./assets/toBarIcon/homeSelected.png"
       },
       {
-        pagePath: "pages/home/home",
+        pagePath: "pages/index/index",
         text: "设置",
         iconPath: "./assets/toBarIcon/setting.png",
         selectedIconPath: "./assets/toBarIcon/settingSelected.png"

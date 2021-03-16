@@ -3,29 +3,30 @@ import Taro from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './index.less'
 
+
 import Login from '../../components/login/index'
-// import Home from '../home/home'
 
-export default class Index extends Component {
+class Index extends Component {
 
-  componentWillMount () { }
+  componentWillMount() { }
 
-  componentDidMount () { }
+  componentDidMount() { }
 
-  componentWillUnmount () { }
+  componentWillUnmount() { }
 
-  componentDidShow () { }
+  componentDidShow() { }
 
-  componentDidHide () { }
-// keyi 
-  render () {
+  componentDidHide() { }
+  // keyi 
+  render() {
     return (
       <View className='index'>
-        {/* <Home/> */}
-      <div>
-        nihao
-      </div>
+        <Login />
+        <button onClick={() => { Taro.switchTab({ url: '/pages/home/home' }) }}>tiao</button>
+
       </View>
     )
   }
 }
+
+export default Index
