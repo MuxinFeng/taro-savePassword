@@ -3,7 +3,7 @@
   "cloudfunctionRoot": "cloud/functions/",
   "projectname": "taro-savePassword",
   "description": "",
-  "appid": "wx57c35d4a910901a2",
+  "appid": "wxcdc94002e30f7766",
   "setting": {
     "urlCheck": true,
     "es6": false,
@@ -19,7 +19,7 @@
     "uploadWithSourceMap": true,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
-    "useApiHostProcess": false,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
