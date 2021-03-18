@@ -4,7 +4,30 @@ import { View, Text } from '@tarojs/components'
 // import './index.less'
 import { AtButton, AtGrid, AtSearchBar, AtFab } from 'taro-ui'
 
-import Login from '../../components/login/index'
+import PasswordList from '../../components/PasswordList/index'
+
+const data = [
+  {
+    name: 'taobao',
+    account: '123',
+    password: '123'
+  },
+  {
+    name: 'taobao',
+    account: '123',
+    password: '123'
+  },
+  {
+    name: 'taobao',
+    account: '123',
+    password: '123'
+  },
+  {
+    name: 'taobao',
+    account: '123',
+    password: '123'
+  },
+]
 
 export default class Index extends Component {
   constructor() {
@@ -70,9 +93,10 @@ export default class Index extends Component {
         <View>
           常用密码
         </View>
-        <AtFab>
+        {/* <AtFab>
           <Text className='at-fab__icon at-icon at-icon-menu'>+</Text>
-        </AtFab>
+        </AtFab> */}
+        <PasswordList data={data}></PasswordList>
       </View>
     )
   }
