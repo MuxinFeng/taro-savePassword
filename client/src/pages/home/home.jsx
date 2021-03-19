@@ -4,7 +4,7 @@ import { View, Text } from '@tarojs/components'
 // import './index.less'
 import { AtButton, AtGrid, AtSearchBar, AtFab } from 'taro-ui'
 
-import PasswordList from '../../components/PasswordList/index'
+import PasswordCard from '../../components/PasswordCard/index'
 
 const data = [
   {
@@ -96,7 +96,11 @@ export default class Index extends Component {
         {/* <AtFab>
           <Text className='at-fab__icon at-icon at-icon-menu'>+</Text>
         </AtFab> */}
-        <PasswordList data={data}></PasswordList>
+        {data.map(item => {
+          return (
+            <PasswordCard data={data}></PasswordCard>
+          )
+        })}
       </View>
     )
   }

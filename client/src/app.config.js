@@ -2,7 +2,9 @@ export default {
   pages: [
   'pages/index/index', 
 
-  'pages/home/home'
+  'pages/home/home',
+
+  'pages/settings/settings'
 ],
   window: {
     navigationBarBackgroundColor: '#ffffff',
@@ -24,7 +26,7 @@ export default {
         selectedIconPath: "./assets/toBarIcon/homeSelected.png"
       },
       {
-        pagePath: "pages/index/index",
+        pagePath: "pages/settings/settings",
         text: "设置",
         iconPath: "./assets/toBarIcon/setting.png",
         selectedIconPath: "./assets/toBarIcon/settingSelected.png"
