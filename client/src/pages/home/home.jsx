@@ -5,6 +5,7 @@ import { View, Text } from '@tarojs/components'
 import { AtButton, AtGrid, AtSearchBar, AtFab } from 'taro-ui'
 
 import PasswordCard from '../../components/PasswordCard/index'
+import IMG1 from '../../assets/toBarIcon/home.png'
 
 const data = [
   {
@@ -59,43 +60,40 @@ export default class Index extends Component {
             console.log(value)
           }}
         />
-        <View>
+        <View className="titleStyle">
           密码分类
         </View>
         <AtGrid data={
           [
             {
-              image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
-              value: '领取中心'
+              image: 'cloud://huixing-database-4fdkxs57829ce87.6875-huixing-database-4fdkxs57829ce87-1305276273/APP.png',
+              value: 'APP'
             },
             {
-              image: 'https://img20.360buyimg.com/jdphoto/s72x72_jfs/t15151/308/1012305375/2300/536ee6ef/5a411466N040a074b.png',
-              value: '找折扣'
+              image: 'cloud://huixing-database-4fdkxs57829ce87.6875-huixing-database-4fdkxs57829ce87-1305276273/study.png',
+              value: '学习'
             },
             {
-              image: 'https://img10.360buyimg.com/jdphoto/s72x72_jfs/t5872/209/5240187906/2872/8fa98cd/595c3b2aN4155b931.png',
-              value: '领会员'
+              image: 'cloud://huixing-database-4fdkxs57829ce87.6875-huixing-database-4fdkxs57829ce87-1305276273/game.png',
+              value: '游戏'
             },
             {
-              image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png',
-              value: '新品首发'
+              image: 'cloud://huixing-database-4fdkxs57829ce87.6875-huixing-database-4fdkxs57829ce87-1305276273/work.png',
+              value: '工作'
             },
             {
-              image: 'https://img14.360buyimg.com/jdphoto/s72x72_jfs/t17251/336/1311038817/3177/72595a07/5ac44618Na1db7b09.png',
-              value: '领京豆'
+              image: 'cloud://huixing-database-4fdkxs57829ce87.6875-huixing-database-4fdkxs57829ce87-1305276273/lifeService.png',
+              value: '生活'
             },
             {
-              image: 'https://img30.360buyimg.com/jdphoto/s72x72_jfs/t5770/97/5184449507/2423/294d5f95/595c3b4dNbc6bc95d.png',
-              value: '手机馆'
+              image: 'cloud://huixing-database-4fdkxs57829ce87.6875-huixing-database-4fdkxs57829ce87-1305276273/others.png',
+              value: '其它'
             }
           ]
         } />
-        <View>
+        <View className="titleStyle">
           常用密码
         </View>
-        {/* <AtFab>
-          <Text className='at-fab__icon at-icon at-icon-menu'>+</Text>
-        </AtFab> */}
         {data.map(item => {
           return (
             <PasswordCard data={data}></PasswordCard>

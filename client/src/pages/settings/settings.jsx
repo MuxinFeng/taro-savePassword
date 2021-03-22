@@ -3,6 +3,7 @@ import Taro from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 // import './index.less'
 import { AtList, AtListItem } from 'taro-ui'
+import IMG from '../../assets/toBarIcon/home.png'
 
 export default class Index extends Component {
     constructor() {
@@ -27,30 +28,22 @@ export default class Index extends Component {
             <View className='index'>
                 <AtList>
                     <AtListItem
-                        title='标题文字'
+                        title='安全设置'
                         arrow='right'
-                        thumb='https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png'
+                        iconInfo={{ size: 25, color: '#FF4949', value: 'settings', }}
                     />
                     <AtListItem
-                        title='标题文字'
+                        title='导出数据'
                         arrow='right'
-                        thumb='https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png'
-                    />
+                        iconInfo={{ size: 25, color: '#FF4949', value: 'download', }} />
                     <AtListItem
-                        title='标题文字'
+                        title='清空数据与还原'
                         arrow='right'
-                        thumb='https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png'
-                    />
+                        iconInfo={{ size: 25, color: '#FF4949', value: 'folder', }} />
                     <AtListItem
-                        title='标题文字'
+                        title='关于我们'
                         arrow='right'
-                        thumb='https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png'
-                    />
-                    <AtListItem
-                        title='标题文字'
-                        arrow='right'
-                        thumb='https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png'
-                    />
+                        iconInfo={{ size: 25, color: '#FF4949', value: 'iphone', }} />
                 </AtList>
             </View>
         )
