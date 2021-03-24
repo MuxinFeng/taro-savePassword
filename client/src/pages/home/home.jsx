@@ -17,6 +17,8 @@ import {
 } from "taro-ui";
 import PasswordCard from "../../components/PasswordCard/index";
 
+const db = Taro.cloud.database();
+
 const data = [
   {
     name: "taobao",
@@ -65,8 +67,32 @@ export default class Index extends Component {
 
   componentDidHide() {}
 
-  addPassWord = () => {
-    console.log("添加成功");
+  addPassWord = async () => {
+    const { account, password, describe, passwordClassify } = this.state;
+    db.collection("table-password")
+      .add({
+        data: {
+          // openid: wxContext.OPENID,
+          account: account,
+          password: password,
+          describe: describe,
+          passwordClassify: passwordClassify
+        }
+      })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    this.setState({
+      isAtFloatLayoutOpen: false,
+      hasAdded: true,
+      account: "",
+      password: "",
+      describe: "",
+      passwordClassify: "其它"
+    });
   };
 
   render() {
@@ -128,7 +154,7 @@ export default class Index extends Component {
         <View className="fixedButton">
           <AtFab
             onClick={() => {
-              this.setState({ isAtFloatLayoutOpen: true });
+              this.setState({ isAtFloatLayoutOpen: true, hasAdded: false });
               console.log("添加密码");
             }}
           >
@@ -141,7 +167,7 @@ export default class Index extends Component {
         <AtFloatLayout
           isOpened={isAtFloatLayoutOpen}
           onClose={() => {
-            this.setState({ isAtFloatLayoutOpen: false });
+            this.setState({ isAtFloatLayoutOpen: false, hasAdded: flase });
           }}
         >
           <View className="iconButton">
@@ -150,7 +176,14 @@ export default class Index extends Component {
               size="24"
               color="gray"
               onClick={() => {
-                this.setState({ isAtFloatLayoutOpen: false });
+                this.setState({
+                  isAtFloatLayoutOpen: false,
+                  hasAdded: false,
+                  account: "",
+                  password: "",
+                  describe: "",
+                  passwordClassify: "其它"
+                });
               }}
             ></AtIcon>
             <AtIcon
@@ -159,7 +192,8 @@ export default class Index extends Component {
               color="#f38031"
               className="confirmIconButton"
               onClick={() => {
-                this.setState({ isAtFloatLayoutOpen: false, hasAdded: true });
+                this.setState({ isAtFloatLayoutOpen: false });
+
                 this.addPassWord();
               }}
             ></AtIcon>
@@ -171,7 +205,9 @@ export default class Index extends Component {
               type="text"
               placeholder="请输入密码描述"
               value={describe}
-              // onChange={this.handleChange.bind(this, "describe")}
+              onChange={value => {
+                this.setState({ describe: value });
+              }}
             />
             <AtInput
               name="account"
@@ -179,7 +215,9 @@ export default class Index extends Component {
               type="text"
               placeholder="请输入账号/用户名/卡号"
               value={account}
-              // onChange={this.handleChange.bind(this, "account")}
+              onChange={value => {
+                this.setState({ account: value });
+              }}
             />
             <AtInput
               name="password"
@@ -187,13 +225,17 @@ export default class Index extends Component {
               type="text"
               placeholder="请输入密码"
               value={password}
-              // onChange={this.handleChange.bind(this, "password")}
+              onChange={value => {
+                this.setState({ password: value });
+              }}
             />
             <Picker
               mode="selector"
               range={classify}
-              onChange={value => {
-                this.setState({ passwordClassify: value.value });
+              onChange={event => {
+                this.setState({
+                  passwordClassify: classify[event.detail.value]
+                });
               }}
             >
               <AtList>
