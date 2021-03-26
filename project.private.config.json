@@ -21,6 +21,12 @@
         {
           "name": "pages/home/home",
           "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/writeKey/writeKey",
+          "pathName": "pages/writeKey/writeKey",
           "scene": null
         }
       ]

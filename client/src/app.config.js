@@ -4,7 +4,9 @@ export default {
 
   'pages/home/home',
 
-  'pages/settings/settings'
+  'pages/settings/settings',
+
+  'pages/writeKey/writeKey'
 ],
   window: {
     navigationBarBackgroundColor: '#ffffff',
