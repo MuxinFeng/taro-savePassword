@@ -16,6 +16,7 @@ import {
   AtToast
 } from "taro-ui";
 import PasswordCard from "../../components/PasswordCard/index";
+import { Encrypt, Decrypt } from "../../utils/handlePassword";
 
 const db = Taro.cloud.database();
 
@@ -69,30 +70,32 @@ export default class Index extends Component {
 
   addPassWord = async () => {
     const { account, password, describe, passwordClassify } = this.state;
-    db.collection("table-password")
-      .add({
-        data: {
-          // openid: wxContext.OPENID,
-          account: account,
-          password: password,
-          describe: describe,
-          passwordClassify: passwordClassify
-        }
-      })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    this.setState({
-      isAtFloatLayoutOpen: false,
-      hasAdded: true,
-      account: "",
-      password: "",
-      describe: "",
-      passwordClassify: "其它"
-    });
+    Encrypt(password);
+    Decrypt(Encrypt(password));
+    // db.collection("table-password")
+    //   .add({
+    //     data: {
+    //       // openid: wxContext.OPENID,
+    //       account: account,
+    //       password: password,
+    //       describe: describe,
+    //       passwordClassify: passwordClassify
+    //     }
+    //   })
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+    // this.setState({
+    //   isAtFloatLayoutOpen: false,
+    //   hasAdded: true,
+    //   account: "",
+    //   password: "",
+    //   describe: "",
+    //   passwordClassify: "其它"
+    // });
   };
 
   render() {
