@@ -9,7 +9,6 @@ import {
   AtFloatLayout,
   AtForm,
   AtInput,
-  AtAvatar,
   AtList,
   AtListItem,
   AtIcon,
@@ -19,29 +18,6 @@ import PasswordCard from "../../components/PasswordCard/index";
 import { Encrypt, Decrypt } from "../../utils/handlePassword";
 
 const db = Taro.cloud.database();
-
-const data = [
-  {
-    name: "taobao",
-    account: "123",
-    password: "123"
-  },
-  {
-    name: "taobao",
-    account: "123",
-    password: "123"
-  },
-  {
-    name: "taobao",
-    account: "123",
-    password: "123"
-  },
-  {
-    name: "taobao",
-    account: "123",
-    password: "123"
-  }
-];
 const classify = ["APP", "学习", "游戏", "工作", "生活", "其它"];
 
 export default class Index extends Component {
@@ -54,13 +30,29 @@ export default class Index extends Component {
       password: "",
       describe: "",
       passwordClassify: "其它",
-      hasAdded: false
+      hasAdded: false,
+      hasNullData: false,
+      context: {},
+      passwordList: []
     };
   }
 
   componentWillMount() {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    Taro.cloud.init();
+    Taro.cloud
+      .callFunction({
+        name: "login",
+        data: {}
+      })
+      .then(res => {
+        this.setState({
+          context: res.result
+        });
+      });
+    this.getPassword();
+  }
 
   componentWillUnmount() {}
 
@@ -68,34 +60,56 @@ export default class Index extends Component {
 
   componentDidHide() {}
 
+  //添加密码
   addPassWord = async () => {
     const { account, password, describe, passwordClassify } = this.state;
-    Encrypt(password);
-    Decrypt(Encrypt(password));
-    // db.collection("table-password")
-    //   .add({
-    //     data: {
-    //       // openid: wxContext.OPENID,
-    //       account: account,
-    //       password: password,
-    //       describe: describe,
-    //       passwordClassify: passwordClassify
-    //     }
-    //   })
-    //   .then(res => {
-    //     console.log(res);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-    // this.setState({
-    //   isAtFloatLayoutOpen: false,
-    //   hasAdded: true,
-    //   account: "",
-    //   password: "",
-    //   describe: "",
-    //   passwordClassify: "其它"
-    // });
+    if (account == "" || password == "") {
+      this.setState({ hasNullData: true });
+    } else {
+      db.collection("table-password")
+        .add({
+          data: {
+            account: account,
+            password: Encrypt(password),
+            describe: describe,
+            passwordClassify: passwordClassify
+          }
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      this.setState({
+        isAtFloatLayoutOpen: false,
+        hasAdded: true,
+        account: "",
+        password: "",
+        describe: "",
+        passwordClassify: "其它"
+      });
+    }
+  };
+
+  //获取密码
+  getPassword = () => {
+    const { context } = this.state;
+    db.collection("table-password")
+      .where({ _openid: context._openid })
+      .get()
+      .then(res => {
+        const passwordList = res.data.map(item => {
+          return { ...item, password: Decrypt(item.password) };
+        });
+        this.setState({
+          passwordList: passwordList
+        });
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   render() {
@@ -105,7 +119,9 @@ export default class Index extends Component {
       password,
       describe,
       passwordClassify,
-      hasAdded
+      hasAdded,
+      hasNullData,
+      passwordList
     } = this.state;
     return (
       <View className="index">
@@ -115,7 +131,6 @@ export default class Index extends Component {
             this.setState({
               searchValue: value
             });
-            console.log(value);
           }}
         />
         <View className="titleStyle">密码分类</View>
@@ -157,20 +172,38 @@ export default class Index extends Component {
         <View className="fixedButton">
           <AtFab
             onClick={() => {
-              this.setState({ isAtFloatLayoutOpen: true, hasAdded: false });
-              console.log("添加密码");
+              this.setState({
+                isAtFloatLayoutOpen: true,
+                hasAdded: false,
+                hasNullData: false
+              });
             }}
           >
             <Text className="fixedButtonText">+</Text>
           </AtFab>
         </View>
 
-        <AtToast isOpened={hasAdded} text="保存成功" icon="check"></AtToast>
+        <AtToast
+          duration="1000"
+          isOpened={hasAdded}
+          text="保存成功"
+          icon="check"
+        ></AtToast>
+        <AtToast
+          duration="1000"
+          isOpened={hasNullData}
+          text="信息填写不完整"
+          icon="close"
+        ></AtToast>
 
         <AtFloatLayout
           isOpened={isAtFloatLayoutOpen}
           onClose={() => {
-            this.setState({ isAtFloatLayoutOpen: false, hasAdded: flase });
+            this.setState({
+              isAtFloatLayoutOpen: false,
+              hasAdded: flase,
+              hasNullData: false
+            });
           }}
         >
           <View className="iconButton">
@@ -261,8 +294,8 @@ export default class Index extends Component {
         </AtFloatLayout>
 
         <View className="titleStyle">常用密码</View>
-        {data.map(item => {
-          return <PasswordCard data={data}></PasswordCard>;
+        {passwordList.map(item => {
+          return <PasswordCard data={item}></PasswordCard>;
         })}
       </View>
     );
