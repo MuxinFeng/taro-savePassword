@@ -20,6 +20,19 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.fa-clock:before {
-  content: "\f00c";
+//卡片组件的可视图标
+.fa-eye:before {
+  content: "\f06e";
+}
+//卡片组件的不可视图标
+.fa-eyeTrash:before {
+  content: "\f070";
+}
+//卡片组件的复制图标
+.fa-copy:before {
+  content: "\f0c5";
+}
+//卡片组件的垃圾箱图标
+.fa-trash:before {
+  content: "\f1f8";
 }

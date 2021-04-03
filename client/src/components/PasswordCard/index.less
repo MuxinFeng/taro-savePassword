@@ -1,44 +1,48 @@
-.passwordCard{
-    margin:0 auto;
-    width:700rpx;
-    height:152rpx;
-    margin-top: 32rpx;
-    margin-bottom:32rpx;
-    border: 1px solid white;
-    border-radius: 25px;
-    box-shadow: 5px 5px 10px rgba(202, 199, 199, 0.5);
-    .cardImg{
-        width:120rpx;
-        height:120rpx;
-        padding: 16rpx 0 16rpx 0;
-        float: left;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .cardContent{
-        margin:16rpx 0 16rpx 32rpx;
-        height:120rpx;
+.passwordCard {
+  margin: 0 auto;
+  width: 700rpx;
+  height: 152rpx;
+  margin-top: 32rpx;
+  margin-bottom: 32rpx;
+  border: 1px solid white;
+  border-radius: 25px;
+  box-shadow: 5px 5px 10px rgba(202, 199, 199, 0.5);
+  .cardImg {
+    width: 120rpx;
+    height: 120rpx;
+    padding: 16rpx 0 16rpx 0;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .cardContent {
+    margin: 16rpx 0 16rpx 32rpx;
+    height: 120rpx;
 
-        .upCardContent{
-            // display: inline-block;
-            .upCardContentIcon{
-                float:right;
-                margin-left:8rpx;
-                .at-icon{
-                    margin-right:16rpx;
-                }
-                .bigFont{
-                    font-size: 32rpx;
-                }
-            }
+    .upCardContent {
+      // display: inline-block;
+      .upCardContentIcon {
+        float: right;
+        // margin-left: 8rpx;
+        .fa {
+          font-size: 36rpx;
+          color: gray;
+          margin-right: 24rpx;
         }
-        .downCardContent{
-            .smallFont{
-                font-size: 24rpx;
-                color: gray;
-            }
+        .at-icon {
+          margin-right: 16rpx;
         }
-        
+        .bigFont {
+          font-size: 32rpx;
+        }
+      }
     }
+    .downCardContent {
+      .smallFont {
+        font-size: 24rpx;
+        color: gray;
+      }
+    }
+  }
 }

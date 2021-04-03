@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
-import { View, Text, Picker } from "@tarojs/components";
+import { View, Text, Picker, Button } from "@tarojs/components";
 import "./home.less";
 import {
   AtGrid,
@@ -16,6 +16,7 @@ import {
 } from "taro-ui";
 import PasswordCard from "../../components/PasswordCard/index";
 import { Encrypt, Decrypt } from "../../utils/handlePassword";
+import { Copy } from "react-to-copy";
 
 const db = Taro.cloud.database();
 const classify = ["APP", "学习", "游戏", "工作", "生活", "其它"];
@@ -134,6 +135,16 @@ export default class Index extends Component {
           }}
         />
         <View className="titleStyle">密码分类</View>
+        <Button style={{ height: "32rpx", width: "32rpx" }}>
+          <Copy
+            content="123"
+            btnText="你好"
+            callback={() => {
+              console.log("实行复制");
+            }}
+          />
+        </Button>
+
         <AtGrid
           data={[
             {
@@ -229,7 +240,6 @@ export default class Index extends Component {
               className="confirmIconButton"
               onClick={() => {
                 this.setState({ isAtFloatLayoutOpen: false });
-
                 this.addPassWord();
               }}
             ></AtIcon>

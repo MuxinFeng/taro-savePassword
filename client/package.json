@@ -42,6 +42,7 @@
     "lodash": "4.17.15",
     "react": "^16.10.0",
     "react-dom": "^16.10.0",
+    "react-to-copy": "^0.1.1",
     "taro-ui": "^3.0.0-alpha.1"
   },
   "devDependencies": {
