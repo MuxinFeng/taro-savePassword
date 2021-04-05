@@ -4,7 +4,6 @@ import { View, Text, Button } from "@tarojs/components";
 import { AtCard, AtIcon, AtDivider, AtAvatar } from "taro-ui";
 import "./index.less";
 import IMG from "../../assets/toBarIcon/home.png";
-import { Copy } from "react-to-copy";
 
 const db = Taro.cloud.database();
 
@@ -13,7 +12,9 @@ export default class Index extends Component {
     super(props);
     this.state = {
       context: {},
-      isPasswordVisible: true
+      isPasswordVisible: true,
+      copied: false,
+      copyValue: "123"
     };
   }
 
@@ -27,8 +28,8 @@ export default class Index extends Component {
 
   componentDidHide() {}
 
+  //删除密码
   handleDelete = data => {
-    console.log(data);
     db.collection("table-password")
       .where({
         _id: data._id
@@ -40,6 +41,20 @@ export default class Index extends Component {
       .catch(error => {
         console.log(error);
       });
+  };
+
+  //复制密码
+  handleCopy = data => {
+    Taro.setClipboardData({
+      data: data.password,
+      success(res) {
+        Taro.getClipboardData({
+          success(res) {
+            console.log("复制成功");
+          }
+        });
+      }
+    });
   };
 
   render() {
@@ -71,24 +86,18 @@ export default class Index extends Component {
                   ></View>
                 )}
                 <View
-                  className="fa fa-copy"
-                  onClick={() => {
-                    console.log("复制");
-                  }}
-                ></View>
-                <View
                   className="fa fa-trash"
                   onClick={() => {
                     this.handleDelete(data);
                   }}
                 ></View>
-                <Copy
-                  content={data.pass}
-                  btnText={"btnText"}
-                  callback={() => {
-                    console.log("实行复制");
+                <View
+                  id={`${data.password}123`}
+                  className="fa fa-copy"
+                  onClick={() => {
+                    this.handleCopy(data);
                   }}
-                />
+                ></View>
               </View>
             </View>
             <hr />

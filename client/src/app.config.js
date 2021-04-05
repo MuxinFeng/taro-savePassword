@@ -1,22 +1,24 @@
 export default {
   pages: [
-  'pages/index/index', 
+    "pages/index/index",
 
-  'pages/home/home',
+    "pages/home/home",
 
-  'pages/settings/settings',
+    "pages/settings/settings",
 
-  'pages/writeKey/writeKey'
-],
+    "pages/writeKey/writeKey",
+
+    "pages/passwordList/passwordList"
+  ],
   window: {
-    navigationBarBackgroundColor: '#ffffff',
-    navigationBarTextStyle: 'black',
-    navigationBarTitleText: '彗星密码本',
-    backgroundColor: '#eeeeee',
-    backgroundTextStyle: 'light'
+    navigationBarBackgroundColor: "#ffffff",
+    navigationBarTextStyle: "black",
+    navigationBarTitleText: "彗星密码本",
+    backgroundColor: "#eeeeee",
+    backgroundTextStyle: "light"
   },
   tabBar: {
-    color:"#515151",
+    color: "#515151",
     selectedColor: "#f38031",
     backgroundColor: "#fff",
     borderStyle: "black",
