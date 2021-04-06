@@ -1,21 +1,37 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
+import { getCurrentInstance } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
-// import './index.less'
-import { AtList, AtListItem } from "taro-ui";
-import IMG from "../../assets/toBarIcon/home.png";
+import "./passwordList.less";
+import { Encrypt, Decrypt } from "../../utils/handlePassword";
+import PasswordCard from "../../components/PasswordCard/index";
 
 export default class Index extends Component {
   constructor() {
     super();
     this.state = {
-      searchValue: ""
+      classify: "",
+      passwordList: [],
+      context: {}
     };
   }
 
   componentWillMount() {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    Taro.cloud.init();
+    Taro.cloud
+      .callFunction({
+        name: "login",
+        data: {}
+      })
+      .then(res => {
+        this.setState({
+          context: res.result
+        });
+      });
+    this.getPasswordList();
+  }
 
   componentWillUnmount() {}
 
@@ -23,31 +39,35 @@ export default class Index extends Component {
 
   componentDidHide() {}
 
+  getPasswordList = () => {
+    const { context } = this.state;
+    const db = Taro.cloud.database();
+    db.collection("table-password")
+      .where({
+        _openid: context._openid,
+        passwordClassify: getCurrentInstance().router.params.classify
+      })
+      .get()
+      .then(res => {
+        const passwordList = res.data.map(item => {
+          return { ...item, password: Decrypt(item.password) };
+        });
+        this.setState({
+          passwordList: passwordList
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   render() {
+    const { passwordList } = this.state;
     return (
       <View className="index">
-        <AtList>
-          <AtListItem
-            title="安全设置"
-            arrow="right"
-            iconInfo={{ size: 25, color: "#FF4949", value: "settings" }}
-          />
-          <AtListItem
-            title="导出数据"
-            arrow="right"
-            iconInfo={{ size: 25, color: "#FF4949", value: "download" }}
-          />
-          <AtListItem
-            title="清空数据与还原"
-            arrow="right"
-            iconInfo={{ size: 25, color: "#FF4949", value: "folder" }}
-          />
-          <AtListItem
-            title="关于我们"
-            arrow="right"
-            iconInfo={{ size: 25, color: "#FF4949", value: "iphone" }}
-          />
-        </AtList>
+        {passwordList.map(item => {
+          return <PasswordCard data={item}></PasswordCard>;
+        })}
       </View>
     );
   }

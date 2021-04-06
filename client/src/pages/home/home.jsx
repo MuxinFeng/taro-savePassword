@@ -105,7 +105,6 @@ export default class Index extends Component {
         this.setState({
           passwordList: passwordList
         });
-        console.log(res);
       })
       .catch(error => {
         console.log(error);
@@ -114,7 +113,9 @@ export default class Index extends Component {
 
   //分类获取密码
   getClassifyPassword = (item, index) => {
-    console.log(item.value);
+    Taro.navigateTo({
+      url: `/pages/passwordList/passwordList?classify=${item.value}`
+    });
   };
 
   render() {
