@@ -1,32 +1,44 @@
-import React, { Component } from 'react'
-import Taro from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import './index.less'
+import React, { Component } from "react";
+import Taro from "@tarojs/taro";
+import { View, Text } from "@tarojs/components";
+import "./index.less";
 
-
-import Login from '../../components/login/index'
+import Login from "../../components/login/index";
 
 class Index extends Component {
+  componentWillMount() {}
 
-  componentWillMount() { }
+  componentDidMount() {}
 
-  componentDidMount() { }
+  componentWillUnmount() {}
 
-  componentWillUnmount() { }
+  componentDidShow() {}
 
-  componentDidShow() { }
+  componentDidHide() {}
 
-  componentDidHide() { }
-  // keyi 
+  // //退出后5min清除密钥
+  // onSaveExitState() {
+  //   const exitState = { key: Taro.getStorageSync("key") }; // 需要保存的数据
+  //   return {
+  //     data: exitState,
+  //     expireTimeStamp: Date.now() + 5 * 60 * 1000 // 超时时刻
+  //   };
+  // }
+
   render() {
     return (
-      <View className='index'>
+      <View className="index">
         <Login />
-        <button onClick={() => { Taro.switchTab({ url: '/pages/home/home' }) }}>tiao</button>
-
+        <button
+          onClick={() => {
+            Taro.switchTab({ url: "/pages/home/home" });
+          }}
+        >
+          tiao
+        </button>
       </View>
-    )
+    );
   }
 }
 
-export default Index
+export default Index;

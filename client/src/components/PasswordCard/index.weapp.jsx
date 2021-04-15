@@ -41,6 +41,7 @@ export default class Index extends Component {
       .catch(error => {
         console.log(error);
       });
+    this.props.getPassword();
   };
 
   //复制密码
@@ -68,7 +69,7 @@ export default class Index extends Component {
           </View>
           <View className="cardContent">
             <View className="upCardContent">
-              <View className="bigFont">名称: {data.name}</View>
+              <View className="bigFont">名称: {data.describe}</View>
               <View className="upCardContentIcon">
                 {isPasswordVisible ? (
                   <View

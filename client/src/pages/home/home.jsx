@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
-import { View, Text, Picker, Button } from "@tarojs/components";
+import { View, Text, Picker, Button, Image } from "@tarojs/components";
 import "./home.less";
 import {
   AtGrid,
@@ -16,6 +16,7 @@ import {
 } from "taro-ui";
 import PasswordCard from "../../components/PasswordCard/index";
 import { Encrypt, Decrypt } from "../../utils/handlePassword";
+import noData from "../../assets/logoIcon/noData.png";
 
 const db = Taro.cloud.database();
 const classify = ["APP", "学习", "游戏", "工作", "生活", "其它"];
@@ -76,6 +77,7 @@ export default class Index extends Component {
           }
         })
         .then(res => {
+          this.getPassword();
           console.log(res);
         })
         .catch(error => {
@@ -118,6 +120,13 @@ export default class Index extends Component {
     });
   };
 
+  //查询密码
+  getSearchData = searchValue => {
+    Taro.navigateTo({
+      url: `/pages/passwordList/passwordList?search=${this.state.searchValue}`
+    });
+  };
+
   render() {
     const {
       isAtFloatLayoutOpen,
@@ -132,11 +141,15 @@ export default class Index extends Component {
     return (
       <View className="index">
         <AtSearchBar
+          style={{ zIndex: "2" }}
           value={this.state.searchValue}
           onChange={value => {
             this.setState({
               searchValue: value
             });
+          }}
+          onActionClick={() => {
+            this.getPassword();
           }}
         />
         <View className="titleStyle">密码分类</View>
@@ -302,9 +315,22 @@ export default class Index extends Component {
         </AtFloatLayout>
 
         <View className="titleStyle">常用密码</View>
-        {passwordList.map(item => {
-          return <PasswordCard data={item}></PasswordCard>;
-        })}
+        {passwordList.length === 0 ? (
+          <>
+            <Image className="noDataImg" src={noData} />
+          </>
+        ) : (
+          <>
+            {passwordList.map(item => {
+              return (
+                <PasswordCard
+                  data={item}
+                  getPassword={this.getPassword}
+                ></PasswordCard>
+              );
+            })}
+          </>
+        )}
       </View>
     );
   }
