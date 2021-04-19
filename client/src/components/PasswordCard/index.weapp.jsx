@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
 import { View, Text, Button } from "@tarojs/components";
-import { AtCard, AtIcon, AtDivider, AtAvatar } from "taro-ui";
+import { AtCard, AtIcon, AtDivider, AtAvatar, AtModal } from "taro-ui";
 import "./index.less";
 import IMG from "../../assets/toBarIcon/home.png";
 
@@ -14,11 +14,14 @@ export default class Index extends Component {
       context: {},
       isPasswordVisible: true,
       copied: false,
-      copyValue: "123"
+      copyValue: "123",
+      confirmDeleteModal: false //是否确认删除
     };
   }
 
-  componentWillMount() {}
+  componentWillMount = () => {
+    console.log(this.props);
+  };
 
   componentDidMount() {}
 
@@ -28,20 +31,36 @@ export default class Index extends Component {
 
   componentDidHide() {}
 
+  //阻止事件冒泡
+  preventBubble = e => {
+    window.event ? (window.event.cancelBubble = true) : e.stopPropagation();
+  };
+
   //删除密码
   handleDelete = data => {
-    db.collection("table-password")
-      .where({
-        _id: data._id
-      })
-      .remove()
-      .then(res => {
-        console.log(res);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    this.props.getPassword();
+    Taro.showModal({
+      title: "提示",
+      cancelText: "我再想想",
+      confirmText: "确认删除",
+      content: "请确认删除？",
+      confirmColor: "#e64340",
+      success: res => {
+        if (res.confirm) {
+          db.collection("table-password")
+            .where({
+              _id: data._id
+            })
+            .remove()
+            .then(res => {
+              console.log(res);
+              this.props.getPassword();
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      }
+    });
   };
 
   //复制密码
@@ -60,7 +79,7 @@ export default class Index extends Component {
 
   render() {
     const { data } = this.props;
-    const { isPasswordVisible } = this.state;
+    const { isPasswordVisible, confirmDeleteModal } = this.state;
     return (
       <View className="index">
         <View className="passwordCard">
@@ -74,28 +93,32 @@ export default class Index extends Component {
                 {isPasswordVisible ? (
                   <View
                     className="fa fa-eye"
-                    onClick={() => {
+                    onClick={e => {
+                      this.preventBubble(e);
                       this.setState({ isPasswordVisible: false });
                     }}
                   ></View>
                 ) : (
                   <View
                     className="fa fa-eyeTrash"
-                    onClick={() => {
+                    onClick={e => {
+                      this.preventBubble(e);
                       this.setState({ isPasswordVisible: true });
                     }}
                   ></View>
                 )}
                 <View
                   className="fa fa-trash"
-                  onClick={() => {
+                  onClick={e => {
+                    this.preventBubble(e);
                     this.handleDelete(data);
                   }}
                 ></View>
                 <View
                   id={`${data.password}123`}
                   className="fa fa-copy"
-                  onClick={() => {
+                  onClick={e => {
+                    this.preventBubble(e);
                     this.handleCopy(data);
                   }}
                 ></View>

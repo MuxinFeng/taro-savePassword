@@ -34,7 +34,9 @@ export default class Index extends Component {
       hasAdded: false,
       hasNullData: false,
       context: {},
-      passwordList: []
+      passwordList: [],
+      modifyStatus: false, //正在修改密码，区别于添加状态
+      modifyData: {} //待修改的密码
     };
   }
 
@@ -61,35 +63,70 @@ export default class Index extends Component {
 
   componentDidHide() {}
 
+  onPullDownRefresh = async () => {
+    this.getPassword();
+    Taro.stopPullDownRefresh();
+  };
+
   //添加密码
   addPassWord = async () => {
-    const { account, password, describe, passwordClassify } = this.state;
+    const {
+      account,
+      password,
+      describe,
+      passwordClassify,
+      modifyStatus,
+      modifyData
+    } = this.state;
     if (account == "" || password == "") {
       this.setState({ hasNullData: true });
     } else {
-      db.collection("table-password")
-        .add({
-          data: {
-            account: account,
-            password: Encrypt(password),
-            describe: describe,
-            passwordClassify: passwordClassify
-          }
-        })
-        .then(res => {
-          this.getPassword();
-          console.log(res);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      if (modifyStatus) {
+        db.collection("table-password")
+          .where({
+            _id: modifyData._id
+          })
+          .update({
+            data: {
+              account: account,
+              password: Encrypt(password),
+              describe: describe,
+              passwordClassify: passwordClassify
+            }
+          })
+          .then(res => {
+            this.getPassword();
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        db.collection("table-password")
+          .add({
+            data: {
+              account: account,
+              password: Encrypt(password),
+              describe: describe,
+              passwordClassify: passwordClassify
+            }
+          })
+          .then(res => {
+            this.getPassword();
+            console.log(res);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
       this.setState({
         isAtFloatLayoutOpen: false,
         hasAdded: true,
         account: "",
         password: "",
         describe: "",
-        passwordClassify: "其它"
+        passwordClassify: "其它",
+        modifyStatus: false
       });
     }
   };
@@ -223,8 +260,9 @@ export default class Index extends Component {
           onClose={() => {
             this.setState({
               isAtFloatLayoutOpen: false,
-              hasAdded: flase,
-              hasNullData: false
+              hasAdded: false,
+              hasNullData: false,
+              modifyStatus: false
             });
           }}
         >
@@ -240,7 +278,8 @@ export default class Index extends Component {
                   account: "",
                   password: "",
                   describe: "",
-                  passwordClassify: "其它"
+                  passwordClassify: "其它",
+                  modifyStatus: false
                 });
               }}
             ></AtIcon>
@@ -323,10 +362,26 @@ export default class Index extends Component {
           <>
             {passwordList.map(item => {
               return (
-                <PasswordCard
-                  data={item}
-                  getPassword={this.getPassword}
-                ></PasswordCard>
+                <View
+                  onClick={() => {
+                    this.setState({
+                      modifyStatus: true,
+                      modifyData: item,
+                      isAtFloatLayoutOpen: true,
+                      hasAdded: false,
+                      hasNullData: false,
+                      account: item.account,
+                      password: item.password,
+                      describe: item.describe,
+                      passwordClassify: item.passwordClassify
+                    });
+                  }}
+                >
+                  <PasswordCard
+                    data={item}
+                    getPassword={this.getPassword}
+                  ></PasswordCard>
+                </View>
               );
             })}
           </>

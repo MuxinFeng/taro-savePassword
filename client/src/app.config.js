@@ -11,6 +11,7 @@ export default {
     "pages/passwordList/passwordList"
   ],
   window: {
+    enablePullDownRefresh: true,
     navigationBarBackgroundColor: "#ffffff",
     navigationBarTextStyle: "black",
     navigationBarTitleText: "彗星密码本",
