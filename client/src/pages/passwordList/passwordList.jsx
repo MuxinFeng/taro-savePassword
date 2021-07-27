@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
 import { getCurrentInstance } from "@tarojs/taro";
-import { View, Text, Image } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import "./passwordList.less";
-import { Encrypt, Decrypt } from "../../utils/handlePassword";
+import { Decrypt } from "../../utils/util";
 import PasswordCard from "../../components/PasswordCard/index";
 import noData from "../../assets/logoIcon/noData.png";
 

@@ -33,12 +33,11 @@ export default class Index extends Component {
     } else {
       this.setState({ showSame: true });
       Taro.setStorageSync("key", key1);
-      setTimeout(
+      setTimeout(() => {
         Taro.switchTab({
           url: "/pages/home/home"
-        }),
-        1200
-      );
+        });
+      }, 1200);
     }
   };
 

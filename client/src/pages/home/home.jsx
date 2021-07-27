@@ -15,7 +15,7 @@ import {
   AtToast
 } from "taro-ui";
 import PasswordCard from "../../components/PasswordCard/index";
-import { Encrypt, Decrypt } from "../../utils/handlePassword";
+import { Encrypt, Decrypt } from "../../utils/util";
 import noData from "../../assets/logoIcon/noData.png";
 
 const db = Taro.cloud.database();
@@ -96,7 +96,6 @@ export default class Index extends Component {
           })
           .then(res => {
             this.getPassword();
-            console.log(res);
           })
           .catch(error => {
             console.log(error);
@@ -113,7 +112,6 @@ export default class Index extends Component {
           })
           .then(res => {
             this.getPassword();
-            console.log(res);
           })
           .catch(error => {
             console.log(error);
@@ -144,6 +142,7 @@ export default class Index extends Component {
         this.setState({
           passwordList: passwordList
         });
+        console.table(passwordList);
       })
       .catch(error => {
         console.log(error);
@@ -338,18 +337,6 @@ export default class Index extends Component {
                 <AtListItem title="密码分类" extraText={passwordClassify} />
               </AtList>
             </Picker>
-            {/* <View className="formIconButton">
-              <AtAvatar
-                circle
-                size="normal"
-                image="https://jdc.jd.com/img/200"
-              ></AtAvatar>
-              <AtAvatar
-                circle
-                size="normal"
-                image="https://jdc.jd.com/img/200"
-              ></AtAvatar>
-            </View> */}
           </AtForm>
         </AtFloatLayout>
 

@@ -19,18 +19,6 @@ export default class Index extends Component {
     };
   }
 
-  componentWillMount = () => {
-    console.log(this.props);
-  };
-
-  componentDidMount() {}
-
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
-
   //阻止事件冒泡
   preventBubble = e => {
     window.event ? (window.event.cancelBubble = true) : e.stopPropagation();
@@ -52,7 +40,6 @@ export default class Index extends Component {
             })
             .remove()
             .then(res => {
-              console.log(res);
               this.props.getPassword();
             })
             .catch(error => {
@@ -66,14 +53,7 @@ export default class Index extends Component {
   //复制密码
   handleCopy = data => {
     Taro.setClipboardData({
-      data: data.password,
-      success(res) {
-        Taro.getClipboardData({
-          success(res) {
-            console.log("复制成功");
-          }
-        });
-      }
+      data: data.password
     });
   };
 
