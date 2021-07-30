@@ -4,6 +4,7 @@ import { getCurrentInstance } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import "./passwordList.less";
 import { Decrypt } from "../../utils/util";
+import { handleSearch } from "../../model/api";
 import PasswordCard from "../../components/PasswordCard/index";
 import noData from "../../assets/logoIcon/noData.png";
 
@@ -68,56 +69,68 @@ export default class Index extends Component {
   };
 
   //根据关键字检索密码
-  getSearchList = () => {
-    const { context } = this.state;
-    const db = Taro.cloud.database();
-    const _ = db.command;
-    db.collection("table-password")
-      .where(
-        _.or([
-          {
-            _openid: context._openid,
-            account: {
-              $regex: ".*" + getCurrentInstance().router.params.search + ".*",
-              $options: "i"
-            }
-          },
-          {
-            _openid: context._openid,
-            describe: {
-              $regex: ".*" + getCurrentInstance().router.params.search + ".*",
-              $options: "i"
-            }
-          },
-          {
-            _openid: context._openid,
-            password: {
-              $regex: ".*" + getCurrentInstance().router.params.search + ".*",
-              $options: "i"
-            }
-          },
-          {
-            _openid: context._openid,
-            passwordClassify: {
-              $regex: ".*" + getCurrentInstance().router.params.search + ".*",
-              $options: "i"
-            }
-          }
-        ])
-      )
-      .get()
-      .then(res => {
-        console.log(res);
-        const passwordList = res.data.map(item => {
-          return { ...item, password: Decrypt(item.password) };
-        });
-        this.setState({
-          passwordList: passwordList
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  getSearchList = async () => {
+    const res = await handleSearch(
+      "",
+      getCurrentInstance().router.params.search
+    );
+    console.log(res);
+    const passwordList = res.data.map(item => {
+      return { ...item, password: Decrypt(item.password) };
+    });
+    this.setState({
+      passwordList: passwordList
+    });
+
+    // const { context } = this.state;
+    // const db = Taro.cloud.database();
+    // const _ = db.command;
+    // db.collection("table-password")
+    //   .where(
+    //     _.or([
+    //       {
+    //         _openid: context._openid,
+    //         account: {
+    //           $regex: ".*" + getCurrentInstance().router.params.search + ".*",
+    //           $options: "i"
+    //         }
+    //       },
+    //       {
+    //         _openid: context._openid,
+    //         describe: {
+    //           $regex: ".*" + getCurrentInstance().router.params.search + ".*",
+    //           $options: "i"
+    //         }
+    //       },
+    //       {
+    //         _openid: context._openid,
+    //         password: {
+    //           $regex: ".*" + getCurrentInstance().router.params.search + ".*",
+    //           $options: "i"
+    //         }
+    //       },
+    //       {
+    //         _openid: context._openid,
+    //         passwordClassify: {
+    //           $regex: ".*" + getCurrentInstance().router.params.search + ".*",
+    //           $options: "i"
+    //         }
+    //       }
+    //     ])
+    //   )
+    //   .get()
+    //   .then(res => {
+    //     console.log(res);
+    //     const passwordList = res.data.map(item => {
+    //       return { ...item, password: Decrypt(item.password) };
+    //     });
+    //     this.setState({
+    //       passwordList: passwordList
+    //     });
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   };
 
   render() {

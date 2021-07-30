@@ -34,7 +34,14 @@ class Index extends Component {
             Taro.switchTab({ url: "/pages/home/home" });
           }}
         >
-          tiao
+          主页
+        </button>
+        <button
+          onClick={() => {
+            Taro.navigateTo({ url: "/pages/writeKey/writeKey" });
+          }}
+        >
+          填写key
         </button>
       </View>
     );

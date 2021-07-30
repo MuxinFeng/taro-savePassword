@@ -16,6 +16,7 @@ import {
 } from "taro-ui";
 import PasswordCard from "../../components/PasswordCard/index";
 import { Encrypt, Decrypt } from "../../utils/util";
+import { handleSearch } from "../../model/api";
 import noData from "../../assets/logoIcon/noData.png";
 
 const db = Taro.cloud.database();
@@ -157,13 +158,14 @@ export default class Index extends Component {
   };
 
   //查询密码
-  getSearchData = searchValue => {
+  getSearchData = () => {
     Taro.navigateTo({
       url: `/pages/passwordList/passwordList?search=${this.state.searchValue}`
     });
   };
 
   render() {
+    // console.log(handleSearch("", "淘宝"));
     const {
       isAtFloatLayoutOpen,
       account,
@@ -185,7 +187,7 @@ export default class Index extends Component {
             });
           }}
           onActionClick={() => {
-            this.getPassword();
+            this.getSearchData();
           }}
         />
         <View className="titleStyle">密码分类</View>
