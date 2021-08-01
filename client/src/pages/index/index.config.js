@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '彗星密码本Index'
-}
+  navigationBarTitleText: "Welcome彗星密码本"
+};

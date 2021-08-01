@@ -3,9 +3,9 @@
   font-family: "FontAwesome";
   /* 自行安装第三方字体图标库 */
   src: url("./assets/fonts/fontawesome-webfont.eot");
-  src: url("./assets/fonts/fontawesome-webfont.woff2") format("woff2"),
-    url("./assets/fonts/fontawesome-webfont.woff") format("woff"),
-    url("./assets/fonts/fontawesome-webfont.ttf") format("truetype");
+  src: url("./assets/fonts/fontawesome-webfont.woff2") format("woff2");
+  //   url("./assets/fonts/fontawesome-webfont.woff") format("woff"),
+  //   url("./assets/fonts/fontawesome-webfont.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }

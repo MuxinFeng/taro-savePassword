@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Taro from "@tarojs/taro";
 import { getCurrentInstance } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import "./passwordList.less";
@@ -7,31 +6,20 @@ import { Decrypt } from "../../utils/util";
 import { handleSearch } from "../../model/api";
 import PasswordCard from "../../components/PasswordCard/index";
 import noData from "../../assets/logoIcon/noData.png";
+import Spin from "../../components/Spin/index";
 
 export default class Index extends Component {
   constructor() {
     super();
     this.state = {
-      classify: "",
       passwordList: [],
-      context: {}
+      loading: true
     };
   }
 
   componentWillMount() {}
 
   componentDidMount() {
-    Taro.cloud.init();
-    Taro.cloud
-      .callFunction({
-        name: "login",
-        data: {}
-      })
-      .then(res => {
-        this.setState({
-          context: res.result
-        });
-      });
     if (getCurrentInstance().router.params.classify !== undefined) {
       this.getPasswordList();
     } else if (getCurrentInstance().router.params.search !== undefined) {
@@ -39,33 +27,19 @@ export default class Index extends Component {
     }
   }
 
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
-
   //根据分类展示密码
-  getPasswordList = () => {
-    const { context } = this.state;
-    const db = Taro.cloud.database();
-    db.collection("table-password")
-      .where({
-        _openid: context._openid,
-        passwordClassify: getCurrentInstance().router.params.classify
-      })
-      .get()
-      .then(res => {
-        const passwordList = res.data.map(item => {
-          return { ...item, password: Decrypt(item.password) };
-        });
-        this.setState({
-          passwordList: passwordList
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  getPasswordList = async () => {
+    const res = await handleSearch(
+      getCurrentInstance().router.params.classify,
+      ""
+    );
+    const passwordList = res.data.map(item => {
+      return { ...item, password: Decrypt(item.password) };
+    });
+    this.setState({
+      passwordList: passwordList,
+      loading: false
+    });
   };
 
   //根据关键字检索密码
@@ -74,80 +48,32 @@ export default class Index extends Component {
       "",
       getCurrentInstance().router.params.search
     );
-    console.log(res);
     const passwordList = res.data.map(item => {
       return { ...item, password: Decrypt(item.password) };
     });
     this.setState({
-      passwordList: passwordList
+      passwordList: passwordList,
+      loading: false
     });
-
-    // const { context } = this.state;
-    // const db = Taro.cloud.database();
-    // const _ = db.command;
-    // db.collection("table-password")
-    //   .where(
-    //     _.or([
-    //       {
-    //         _openid: context._openid,
-    //         account: {
-    //           $regex: ".*" + getCurrentInstance().router.params.search + ".*",
-    //           $options: "i"
-    //         }
-    //       },
-    //       {
-    //         _openid: context._openid,
-    //         describe: {
-    //           $regex: ".*" + getCurrentInstance().router.params.search + ".*",
-    //           $options: "i"
-    //         }
-    //       },
-    //       {
-    //         _openid: context._openid,
-    //         password: {
-    //           $regex: ".*" + getCurrentInstance().router.params.search + ".*",
-    //           $options: "i"
-    //         }
-    //       },
-    //       {
-    //         _openid: context._openid,
-    //         passwordClassify: {
-    //           $regex: ".*" + getCurrentInstance().router.params.search + ".*",
-    //           $options: "i"
-    //         }
-    //       }
-    //     ])
-    //   )
-    //   .get()
-    //   .then(res => {
-    //     console.log(res);
-    //     const passwordList = res.data.map(item => {
-    //       return { ...item, password: Decrypt(item.password) };
-    //     });
-    //     this.setState({
-    //       passwordList: passwordList
-    //     });
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
   };
 
   render() {
-    const { passwordList } = this.state;
+    const { passwordList, loading } = this.state;
     return (
       <View className="index">
-        {passwordList.length === 0 ? (
-          <>
-            <Image className="noDataImg" src={noData} />
-          </>
-        ) : (
-          <>
-            {passwordList.map(item => {
-              return <PasswordCard data={item}></PasswordCard>;
-            })}
-          </>
-        )}
+        <Spin loading={loading}>
+          {passwordList.length === 0 ? (
+            <>
+              <Image className="noDataImg" src={noData} />
+            </>
+          ) : (
+            <>
+              {passwordList.map(item => {
+                return <PasswordCard data={item}></PasswordCard>;
+              })}
+            </>
+          )}
+        </Spin>
       </View>
     );
   }

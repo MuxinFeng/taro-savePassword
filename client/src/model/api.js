@@ -1,5 +1,9 @@
 import Taro from "@tarojs/taro";
 
+const db = Taro.cloud.database();
+const _ = db.command;
+const context = Taro.getStorageSync("userInfo");
+
 /**
  * 处理搜索密码事件,如果两个参数都为空，则返回所有密码
  * @param {String} classify  根据密码所属种类搜索
@@ -8,10 +12,7 @@ import Taro from "@tarojs/taro";
  */
 export const handleSearch = async (classify, keyWord) => {
   const searchObj = {};
-  const db = Taro.cloud.database();
-  const _ = db.command;
-  const context = Taro.getStorageSync("userInfo");
-  searchObj.openid = context !== undefined ? context.openid : "";
+  searchObj._openid = context !== undefined ? context.openid : "";
   let result;
 
   //处理模糊搜索
@@ -60,14 +61,14 @@ export const handleSearch = async (classify, keyWord) => {
   } else {
     //处理分类搜索和无条件搜索
     if (classify) {
-      searchObj.classify = classify;
+      searchObj.passwordClassify = classify;
     }
     await db
       .collection("table-password")
       .where(searchObj)
       .get()
       .then(res => {
-        result = res.data;
+        result = res;
       })
       .catch(error => {
         console.log(error);

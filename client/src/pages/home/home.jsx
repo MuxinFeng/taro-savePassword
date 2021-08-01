@@ -41,8 +41,6 @@ export default class Index extends Component {
     };
   }
 
-  componentWillMount() {}
-
   componentDidMount() {
     Taro.cloud.init();
     Taro.cloud
@@ -57,12 +55,6 @@ export default class Index extends Component {
       });
     this.getPassword();
   }
-
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
 
   onPullDownRefresh = async () => {
     this.getPassword();
@@ -131,23 +123,14 @@ export default class Index extends Component {
   };
 
   //获取密码
-  getPassword = () => {
-    const { context } = this.state;
-    db.collection("table-password")
-      .where({ _openid: context._openid })
-      .get()
-      .then(res => {
-        const passwordList = res.data.map(item => {
-          return { ...item, password: Decrypt(item.password) };
-        });
-        this.setState({
-          passwordList: passwordList
-        });
-        console.table(passwordList);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  getPassword = async () => {
+    const res = await handleSearch("", "");
+    const passwordList = res.data.map(item => {
+      return { ...item, password: Decrypt(item.password) };
+    });
+    this.setState({
+      passwordList: passwordList
+    });
   };
 
   //分类获取密码
@@ -165,7 +148,6 @@ export default class Index extends Component {
   };
 
   render() {
-    // console.log(handleSearch("", "淘宝"));
     const {
       isAtFloatLayoutOpen,
       account,
