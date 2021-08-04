@@ -11,7 +11,7 @@ const iv = AES.CryptoJS.enc.Utf8.parse("123456789abcdefe");
  * @param {String} uniqueKey
  * @returns {String} 16位的16进制数
  */
-const handleKey = uniqueKey => {
+const handleKey = (uniqueKey) => {
   if (uniqueKey.length >= 15) {
     return uniqueKey.subString(0, 15);
   } else {
@@ -28,13 +28,13 @@ const handleKey = uniqueKey => {
  * @param {String} rawData
  * @return {String}  大写的十六进制加密结果
  */
-export const Encrypt = rawData => {
+export const Encrypt = (rawData) => {
   const key = AES.CryptoJS.enc.Utf8.parse(handleKey(uniqueKey));
   const srcs = AES.CryptoJS.enc.Utf8.parse(rawData);
   const encrypted = AES.CryptoJS.AES.encrypt(srcs, key, {
     iv: iv,
     mode: AES.CryptoJS.mode.ECB,
-    padding: AES.CryptoJS.pad.Pkcs7
+    padding: AES.CryptoJS.pad.Pkcs7,
   });
   return encrypted.ciphertext.toString().toUpperCase();
 };
@@ -44,14 +44,14 @@ export const Encrypt = rawData => {
  * @param {String} dbData
  * @return {String} 返回用户存储的原始密码数据
  */
-export const Decrypt = dbData => {
+export const Decrypt = (dbData) => {
   const key = AES.CryptoJS.enc.Utf8.parse(handleKey(uniqueKey));
   const encryptedHexStr = AES.CryptoJS.enc.Hex.parse(dbData);
   const srcs = AES.CryptoJS.enc.Base64.stringify(encryptedHexStr);
   const decrypt = AES.CryptoJS.AES.decrypt(srcs, key, {
     iv: iv,
     mode: AES.CryptoJS.mode.ECB,
-    padding: AES.CryptoJS.pad.Pkcs7
+    padding: AES.CryptoJS.pad.Pkcs7,
   });
   const decryptedStr = decrypt.toString(AES.CryptoJS.enc.Utf8);
   return decryptedStr.toString();

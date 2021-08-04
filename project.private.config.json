@@ -27,6 +27,13 @@
         {
           "name": "pages/writeKey/writeKey",
           "pathName": "pages/writeKey/writeKey",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/settings/settings",
+          "pathName": "pages/settings/settings",
+          "query": "",
           "scene": null
         }
       ]

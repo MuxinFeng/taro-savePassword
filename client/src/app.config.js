@@ -8,7 +8,9 @@ export default {
 
     "pages/writeKey/writeKey",
 
-    "pages/passwordList/passwordList"
+    "pages/passwordList/passwordList",
+
+    "pages/safeSettings/safeSettings"
   ],
   window: {
     enablePullDownRefresh: true,
