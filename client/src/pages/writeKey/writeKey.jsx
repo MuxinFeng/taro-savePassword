@@ -16,16 +16,6 @@ export default class Index extends Component {
     };
   }
 
-  componentWillMount() {}
-
-  componentDidMount() {}
-
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
-
   saveKey = () => {
     const { key1, key2 } = this.state;
     if (key1 !== key2) {

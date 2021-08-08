@@ -19,6 +19,9 @@ export default class Index extends Component {
             title="修改密钥"
             note="重新设置用来加密密码的密钥"
             arrow="right"
+            onClick={() => {
+              Taro.navigateTo({ url: "/pages/writeKey/writeKey" });
+            }}
           />
           <AtListItem
             title="页面禁止截屏"

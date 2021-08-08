@@ -2,8 +2,6 @@ import Taro from "@tarojs/taro";
 import { Base16 } from "base-coding";
 
 const AES = require("./aes");
-const userkey = Taro.getStorageSync("key"); //取缓存的key
-const uniqueKey = Base16.encode(userkey); //用户自己的密钥，转化为16进制
 const iv = AES.CryptoJS.enc.Utf8.parse("123456789abcdefe");
 
 /**
@@ -29,6 +27,8 @@ const handleKey = uniqueKey => {
  * @return {String}  大写的十六进制加密结果
  */
 export const Encrypt = rawData => {
+  const userkey = Taro.getStorageSync("key"); //取缓存的key
+  const uniqueKey = Base16.encode(userkey); //用户自己的密钥，转化为16进制
   const key = AES.CryptoJS.enc.Utf8.parse(handleKey(uniqueKey));
   const srcs = AES.CryptoJS.enc.Utf8.parse(rawData);
   const encrypted = AES.CryptoJS.AES.encrypt(srcs, key, {
@@ -45,6 +45,8 @@ export const Encrypt = rawData => {
  * @return {String} 返回用户存储的原始密码数据
  */
 export const Decrypt = dbData => {
+  const userkey = Taro.getStorageSync("key"); //取缓存的key
+  const uniqueKey = Base16.encode(userkey); //用户自己的密钥，转化为16进制
   const key = AES.CryptoJS.enc.Utf8.parse(handleKey(uniqueKey));
   const encryptedHexStr = AES.CryptoJS.enc.Hex.parse(dbData);
   const srcs = AES.CryptoJS.enc.Base64.stringify(encryptedHexStr);
