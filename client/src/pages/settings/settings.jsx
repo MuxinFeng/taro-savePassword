@@ -107,6 +107,9 @@ export default class Index extends Component {
             title="关于我们"
             arrow="right"
             iconInfo={{ size: 25, color: "#FF4949", value: "iphone" }}
+            onClick={() => {
+              Taro.navigateTo({ url: "/pages/about/about" });
+            }}
           />
         </AtList>
         <AtModal

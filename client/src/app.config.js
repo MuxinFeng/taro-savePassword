@@ -10,7 +10,9 @@ export default {
 
     "pages/passwordList/passwordList",
 
-    "pages/safeSettings/safeSettings"
+    "pages/safeSettings/safeSettings",
+
+    "pages/about/about"
   ],
   window: {
     enablePullDownRefresh: true,
