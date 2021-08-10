@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
-import { View, Text, Image } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import "./writeKey.less";
-import { AtInput, AtButton, AtToast } from "taro-ui";
+import { AtInput, AtButton, AtToast, AtModal } from "taro-ui";
 import LogoIMG from "../../assets/logoIcon/logo.png";
 
 export default class Index extends Component {
@@ -12,10 +12,14 @@ export default class Index extends Component {
       key1: "",
       key2: "",
       showSame: false,
-      showDifferent: false
+      showDifferent: false,
+      isDescribeModalOpen: false
     };
   }
 
+  /**
+   * 保存密钥
+   */
   saveKey = () => {
     const { key1, key2 } = this.state;
     if (key1 !== key2) {
@@ -31,8 +35,23 @@ export default class Index extends Component {
     }
   };
 
+  /**
+   * 关闭所有模态窗
+   */
+  closeAllModal = () => {
+    this.setState({
+      isDescribeModalOpen: false
+    });
+  };
+
   render() {
-    const { key1, key2, showDifferent, showSame } = this.state;
+    const {
+      key1,
+      key2,
+      showDifferent,
+      showSame,
+      isDescribeModalOpen
+    } = this.state;
     return (
       <View className="index">
         <Image className="logoImg" src={LogoIMG} />
@@ -65,6 +84,7 @@ export default class Index extends Component {
           }}
         />
         <AtButton
+          className="button-style"
           circle={true}
           type="primary"
           onClick={() => {
@@ -85,6 +105,28 @@ export default class Index extends Component {
           text="保存成功"
           icon="check"
         ></AtToast>
+
+        <View
+          className="text-style"
+          onClick={() => {
+            this.setState({
+              isDescribeModalOpen: true
+            });
+          }}
+        >
+          什么是密钥
+        </View>
+        <AtModal
+          isOpened={isDescribeModalOpen}
+          title="什么是密钥"
+          cancelText="取消"
+          confirmText="确认"
+          onClose={this.closeAllModal}
+          onCancel={this.closeAllModal}
+          onConfirm={this.closeAllModal}
+          content="密钥是用来加密、解密用户数据的，为保证数据安全，数据库中只存储加密过后的密码，
+          如果密钥遗失，所有密码都无法解析。"
+        />
       </View>
     );
   }

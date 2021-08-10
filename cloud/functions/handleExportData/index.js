@@ -1,10 +1,9 @@
 // 云函数入口文件
 const cloud = require("wx-server-sdk");
+cloud.init();
 const Base = require("base-coding");
 const xlsx = require("node-xlsx");
 const AES = require("./aes");
-
-cloud.init();
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -69,7 +68,7 @@ exports.main = async (event, context) => {
     });
 
   //3. 导出excel
-  let excelname = "彗星密码本.xlsx";
+  let excelname = `彗星密码本${wxContext.OPENID.substring(0, 10)}.xlsx`;
   let excelOption = [];
   let head = ["名称", "账号", "密码"];
   excelOption.push(head);

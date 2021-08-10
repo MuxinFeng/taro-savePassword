@@ -25,8 +25,8 @@
           "scene": null
         },
         {
-          "name": "pages/about/about",
-          "pathName": "pages/about/about",
+          "name": "pages/writeKey/writeKey",
+          "pathName": "pages/writeKey/writeKey",
           "query": "",
           "scene": null
         },

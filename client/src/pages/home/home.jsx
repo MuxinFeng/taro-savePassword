@@ -94,8 +94,10 @@ export default class Index extends Component {
             console.log(error);
           });
       } else {
-        db.collection("table-password")
-          .add({
+        Taro.cloud.init();
+        Taro.cloud
+          .callFunction({
+            name: "addData",
             data: {
               account: account,
               password: Encrypt(password),

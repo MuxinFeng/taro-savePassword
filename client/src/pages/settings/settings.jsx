@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { View } from "@tarojs/components";
-import { AtList, AtListItem, AtModal, message } from "taro-ui";
+import { AtList, AtListItem, AtModal, AtToast } from "taro-ui";
 import Taro from "@tarojs/taro";
-import { handleSearch } from "../../model/api";
-import { Decrypt } from "../../utils/util";
 
 export default class Index extends Component {
   constructor() {
@@ -11,7 +9,9 @@ export default class Index extends Component {
     this.tempFileURL = ""; //下载链接
     this.state = {
       searchValue: "",
-      isExportExcelModalOpen: false
+      isExportExcelModalOpen: false,
+      isClearAllDataModalOpen: false,
+      hasClearAllData: false
     };
   }
 
@@ -65,17 +65,47 @@ export default class Index extends Component {
   };
 
   /**
+   * 清除所有数据
+   * @returns void
+   */
+  handleClearAllData = () => {
+    Taro.cloud.init();
+    Taro.cloud
+      .callFunction({
+        name: "handleClearAllData",
+        data: {}
+      })
+      .then(res => {
+        console.log(res);
+        this.setState({
+          hasClearAllData: true
+        });
+      });
+    this.handleCloseAllModal();
+    setTimeout(() => {
+      this.setState({
+        hasClearAllData: false
+      });
+    }, 1500);
+  };
+
+  /**
    * 关闭所有模态窗
    * @returns void
    */
   handleCloseAllModal = () => {
     this.setState({
-      isExportExcelModalOpen: false
+      isExportExcelModalOpen: false,
+      isClearAllDataModalOpen: false
     });
   };
 
   render() {
-    const { isExportExcelModalOpen } = this.state;
+    const {
+      isExportExcelModalOpen,
+      isClearAllDataModalOpen,
+      hasClearAllData
+    } = this.state;
     return (
       <View className="index">
         <AtList>
@@ -99,9 +129,14 @@ export default class Index extends Component {
             }}
           />
           <AtListItem
-            title="清空数据与还原"
+            title="清空数据"
             arrow="right"
             iconInfo={{ size: 25, color: "#FF4949", value: "folder" }}
+            onClick={() => {
+              this.setState({
+                isClearAllDataModalOpen: true
+              });
+            }}
           />
           <AtListItem
             title="关于我们"
@@ -122,6 +157,22 @@ export default class Index extends Component {
           onConfirm={this.handleExportExcel}
           content="由于无法在小程序内直接下载文件，如果您同意，系统会将下载链接放在您的剪贴板，打开浏览器即可下载"
         />
+        <AtModal
+          isOpened={isClearAllDataModalOpen}
+          title="提示"
+          cancelText="取消"
+          confirmText="确认"
+          onClose={this.handleCloseAllModal}
+          onCancel={this.handleCloseAllModal}
+          onConfirm={this.handleClearAllData}
+          content="该操作会清除所有个人数据，并且清除的数据后无法恢复"
+        />
+        <AtToast
+          isOpened={hasClearAllData}
+          text="数据已清除"
+          // duration={1000}
+          icon="check"
+        ></AtToast>
       </View>
     );
   }

@@ -1,3 +1,4 @@
 export default {
-  navigationBarTitleText: "彗星密码本"
+  navigationBarTitleText: "彗星密码本",
+  enablePullDownRefresh: true
 };
