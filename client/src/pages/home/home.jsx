@@ -186,6 +186,7 @@ export default class Index extends Component {
             this.getSearchData();
           }}
         />
+        <View style={{ backgroundColor: "#F7F7F7", height: "16rpx" }}></View>
         <View className="titleStyle">密码分类</View>
         <AtGrid
           data={[
@@ -353,7 +354,7 @@ export default class Index extends Component {
             </Picker>
           </AtForm>
         </AtFloatLayout>
-
+        <View style={{ backgroundColor: "#F7F7F7", height: "16rpx" }}></View>
         <View className="titleStyle">常用密码</View>
         {passwordList.length === 0 ? (
           <>

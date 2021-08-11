@@ -121,11 +121,12 @@ export default class Index extends Component {
           <open-data type="userAvatarUrl" className="avatar"></open-data>
           <open-data type="userNickName" className="userName"></open-data>
         </View>
+        <View style={{ backgroundColor: "#F7F7F7", height: "16rpx" }}></View>
         <AtList>
           <AtListItem
             title="安全设置"
             arrow="right"
-            iconInfo={{ size: 25, color: "#FF4949", value: "settings" }}
+            thumb="cloud://huixing-database-4fdkxs57829ce87.6875-huixing-database-4fdkxs57829ce87-1305276273/safeSettings.png"
             onClick={() => {
               Taro.navigateTo({ url: "/pages/safeSettings/safeSettings" });
             }}
@@ -133,7 +134,7 @@ export default class Index extends Component {
           <AtListItem
             title="导出数据"
             arrow="right"
-            iconInfo={{ size: 25, color: "#FF4949", value: "download" }}
+            thumb="cloud://huixing-database-4fdkxs57829ce87.6875-huixing-database-4fdkxs57829ce87-1305276273/export.png"
             onClick={() => {
               this.prepareExport();
               this.setState({
@@ -144,7 +145,7 @@ export default class Index extends Component {
           <AtListItem
             title="清空数据"
             arrow="right"
-            iconInfo={{ size: 25, color: "#FF4949", value: "folder" }}
+            thumb="cloud://huixing-database-4fdkxs57829ce87.6875-huixing-database-4fdkxs57829ce87-1305276273/clear.png"
             onClick={() => {
               this.setState({
                 isClearAllDataModalOpen: true
@@ -154,7 +155,7 @@ export default class Index extends Component {
           <AtListItem
             title="关于我们"
             arrow="right"
-            iconInfo={{ size: 25, color: "#FF4949", value: "iphone" }}
+            thumb="cloud://huixing-database-4fdkxs57829ce87.6875-huixing-database-4fdkxs57829ce87-1305276273/about.png"
             onClick={() => {
               Taro.navigateTo({ url: "/pages/about/about" });
             }}
