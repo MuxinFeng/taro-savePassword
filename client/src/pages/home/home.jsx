@@ -37,7 +37,8 @@ export default class Index extends Component {
       context: {},
       passwordList: [],
       modifyStatus: false, //正在修改密码，区别于添加状态
-      modifyData: {} //待修改的密码
+      modifyData: {}, //待修改的密码
+      loading: false
     };
   }
 
@@ -57,7 +58,13 @@ export default class Index extends Component {
   }
 
   onPullDownRefresh = async () => {
-    this.getPassword();
+    this.setState({
+      loading: true
+    });
+    await this.getPassword();
+    this.setState({
+      loading: false
+    });
     Taro.stopPullDownRefresh();
   };
 
@@ -74,6 +81,9 @@ export default class Index extends Component {
     if (account == "" || password == "") {
       this.setState({ hasNullData: true });
     } else {
+      this.setState({
+        loading: true
+      });
       if (modifyStatus) {
         db.collection("table-password")
           .where({
@@ -113,6 +123,7 @@ export default class Index extends Component {
           });
       }
       this.setState({
+        loading: false,
         isAtFloatLayoutOpen: false,
         hasAdded: true,
         account: "",
@@ -158,7 +169,8 @@ export default class Index extends Component {
       passwordClassify,
       hasAdded,
       hasNullData,
-      passwordList
+      passwordList,
+      loading
     } = this.state;
     return (
       <View className="index">
@@ -232,12 +244,28 @@ export default class Index extends Component {
           isOpened={hasAdded}
           text="保存成功"
           icon="check"
+          onClose={() => {
+            this.setState({
+              hasAdded: false
+            });
+          }}
         ></AtToast>
         <AtToast
           duration="1000"
           isOpened={hasNullData}
           text="信息填写不完整"
           icon="close"
+          onClose={() => {
+            this.setState({
+              hasNullData: false
+            });
+          }}
+        ></AtToast>
+        <AtToast
+          isOpened={loading}
+          duration={0}
+          text="加载中"
+          status={"loading"}
         ></AtToast>
 
         <AtFloatLayout

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { View } from "@tarojs/components";
-import { AtList, AtListItem, AtModal, AtToast } from "taro-ui";
+import { AtList, AtListItem, AtModal, AtToast, AtDivider } from "taro-ui";
 import Taro from "@tarojs/taro";
+import "./settings.less";
 
 export default class Index extends Component {
   constructor() {
@@ -11,7 +12,8 @@ export default class Index extends Component {
       searchValue: "",
       isExportExcelModalOpen: false,
       isClearAllDataModalOpen: false,
-      hasClearAllData: false
+      hasClearAllData: false, //控制toast，正在清除数据
+      loading: false //控制toast，正在加载
     };
   }
 
@@ -46,6 +48,9 @@ export default class Index extends Component {
    * @returns  void
    */
   handleForesee = () => {
+    this.setState({
+      loading: true
+    });
     Taro.downloadFile({
       url: this.tempFileURL,
       success(res) {
@@ -62,15 +67,21 @@ export default class Index extends Component {
         }
       }
     });
+    this.setState({
+      loading: false
+    });
   };
 
   /**
    * 清除所有数据
    * @returns void
    */
-  handleClearAllData = () => {
+  handleClearAllData = async () => {
+    this.setState({
+      loading: true
+    });
     Taro.cloud.init();
-    Taro.cloud
+    await Taro.cloud
       .callFunction({
         name: "handleClearAllData",
         data: {}
@@ -78,15 +89,11 @@ export default class Index extends Component {
       .then(res => {
         console.log(res);
         this.setState({
+          loading: false,
           hasClearAllData: true
         });
       });
     this.handleCloseAllModal();
-    setTimeout(() => {
-      this.setState({
-        hasClearAllData: false
-      });
-    }, 1500);
   };
 
   /**
@@ -96,7 +103,8 @@ export default class Index extends Component {
   handleCloseAllModal = () => {
     this.setState({
       isExportExcelModalOpen: false,
-      isClearAllDataModalOpen: false
+      isClearAllDataModalOpen: false,
+      loading: false
     });
   };
 
@@ -104,10 +112,15 @@ export default class Index extends Component {
     const {
       isExportExcelModalOpen,
       isClearAllDataModalOpen,
-      hasClearAllData
+      hasClearAllData,
+      loading
     } = this.state;
     return (
       <View className="index">
+        <View className="userInfo">
+          <open-data type="userAvatarUrl" className="avatar"></open-data>
+          <open-data type="userNickName" className="userName"></open-data>
+        </View>
         <AtList>
           <AtListItem
             title="安全设置"
@@ -168,11 +181,20 @@ export default class Index extends Component {
           content="该操作会清除所有个人数据，并且清除的数据后无法恢复"
         />
         <AtToast
+          isOpened={loading}
+          duration={0}
+          text="加载中"
+          status={"loading"}
+        />
+        <AtToast
           isOpened={hasClearAllData}
           text="数据已清除"
-          // duration={1000}
+          duration={1500}
           icon="check"
-        ></AtToast>
+          onClose={() => {
+            this.setState({ hasClearAllData: false });
+          }}
+        />
       </View>
     );
   }
