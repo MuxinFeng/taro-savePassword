@@ -31,6 +31,8 @@ yarn
 cd .\client\
 
 npm run dev:weapp
+
+打开微信开发工具,将编译好的文件导入即可
 ```
 ## 代码结构
 ```
