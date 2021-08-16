@@ -2,8 +2,7 @@ module.exports = {
   env: {
     NODE_ENV: '"production"'
   },
-  defineConstants: {
-  },
+  defineConstants: {},
   weapp: {
     module: {
       postcss: {
@@ -31,4 +30,4 @@ module.exports = {
      * }
      */
   }
-}
+};
