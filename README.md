@@ -31,73 +31,72 @@ yarn
 cd .\client\
 
 npm run dev:weapp
-
-打开微信开发工具,将编译好的文件导入即可
 ```
+[⬆️ 返回顶部](#简介)
 ## 代码结构
 ```
-├── animate.wxss
-├── app.js
-├── app.json
-├── app.wxss
-├── components #公用组件
-|  ├── header #全局header
-|  ├── home-add-tips #首页添加到我的小程序提示
-|  ├── input #全局下划线输入框
-|  └── validatePwd #没有指纹验证设备的主密码验证
-├── images
-├── model
-|  ├── base.js #小程序端操作云开发数据库的基类
-|  ├── password.js #password集合的model层
-|  └── user.js #用户model集合层
-├── pages
-|  ├── about #关于页面
-|  ├── accountDetail #数据详情页面
-|  ├── addAccount #添加/修改密码页面
-|  ├── home #首页
-|  ├── list #搜索/全部记录页
-|  ├── mine #偏好设置页面
-|  └── register #主密码设置页
-├── sitemap.json
-└── utils
-   ├── cryptojs #加解密类库，用到了sha256 和 AES
-   |  ├── README.md
-   |  ├── cryptojs.js
-   |  ├── lib
-   |  ├── package.json
-   |  └── test
-   ├── log.js #日志操作
-   ├── pageScript.wxs
-   ├── router.js #全局路由
-   ├── tool.js #全局SDK，封装了复用性较多的函数
-   └── util.js #工具类函数
+#业务代码
+
+client
+├──config  #taro框架的配置信息，如果仅在微信平台运行，可无视此部分
+└──src 
+|  ├── app.config.js #小程序配置文件，配置页面、导航栏等信息
+|  ├── app.js
+|  ├── app.less
+|  ├── app.scss #项目中用到了特殊的icon，在该文件做引入处理
+|  ├── index.html
+|  ├── assets #资源文件
+|  |  ├── fonts #字体文件
+|  |  ├── kindIcon #分类图标
+|  |  ├── logoIcon 
+|  |  ├── settingsIcon #设置页图标
+|  |  └── toBarIcon 
+|  ├── components #通用组件
+|  |  ├── PasswordCaed #密码卡片
+|  |  └── Spin #加载状态
+|  ├── model
+|  |  └── api.js #数据交互方法封装
+|  ├── pages
+|  |  ├── about #关于页面
+|  |  ├── home #主页（toBar）
+|  |  ├── index #初始页
+|  |  ├── passwordList #纯展示密码页
+|  |  ├── safeSettings #安全设置页
+|  |  ├── settings #设置页（toBar）
+|  |  └── writeKey #设置密钥页
+|  └── utils
+|     ├── aes.js #加解密类库，用到了AES
+|     └── util.js #通用函数封装
 
 ```
-[⬆️ 返回顶部](##简介)
+[⬆️ 返回顶部](#简介)
 ## 功能
-- 已完成
+### 已完成
+- [x] 密码的添加、修改、删除
+- [x] 密码的关键字搜索、分类查找
+- [x] 用户密码数据加密、解密  
+- [x] 导出密码文件
+- [x] 清空个人数据
 
-- [x] 登录  
-- [x] 注册  
-- [x] 文章列表
-- [x] 文章归档
-- [x] 标签  
-- [x] 关于  
-- [x] 点赞与评论
-- [x] 留言
-- [x] 历程
-- [x] 文章详情（支持代码语法高亮）
-- [x] 文章详情目录
-- [x] 移动端适配
-- [x] github 授权登录
-- 待完成
+### 待完成
+- [ ] 用户管理
+- [ ] 自定义密钥有效期
+- [ ] 程序内禁止截图
+- [ ] 自定义密码卡片的avatar
+
 [⬆️ 返回顶部](##简介)
+
 ## 效果
+### 运行截图
+![效果图](https://github.com/MuxinFeng/taro-savePassword/blob/master/showImage/showImage1.png)
 
-- 运行截图
-- 二维码
+[⬆️ 返回顶部](#简介)
 
-
-## 致谢
+## 参考资料
+- [Taro官方文档](https://taro.aotu.io/)
+- [Taro-ui](https://taro-ui.jd.com/#/)
+- [Taro项目问答社区](https://github.com/NervJS/taro/issues)
+- [微信开发文档](https://developers.weixin.qq.com/miniprogram/dev/framework/)
+- [有本密码-小程序](https://github.com/arleyGuoLei/wechat-1password)
 
 [⬆️ 返回顶部](##简介)
