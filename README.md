@@ -88,7 +88,7 @@ client
 
 ## 效果
 
-![效果图](https://uploader.shimo.im/f/HkF1wZbxSOCLGwzF.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2MjkxMTI0NTMsImciOiJWSmtnR1l3ZFlxV3BIVHZjIiwiaWF0IjoxNjI5MTEyMTUzLCJ1c2VySWQiOjM4NTA2MDY4fQ.pLmFoSpA8K5aw4jJYnp56UuBpycvtduEKXY7bE9jcEQ)
+![效果图](https://user-images.githubusercontent.com/46584765/129559046-748be938-07d5-42a5-98d7-a0cba6bac076.png)
 
 [⬆️ 返回顶部](#简介)
 
