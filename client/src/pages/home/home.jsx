@@ -137,12 +137,16 @@ export default class Index extends Component {
 
   //获取密码
   getPassword = async () => {
+    this.setState({
+      loading: true
+    });
     const res = await handleSearch("", "");
     const passwordList = res.data.map(item => {
       return { ...item, password: Decrypt(item.password) };
     });
     this.setState({
-      passwordList: passwordList
+      passwordList: passwordList,
+      loading: false
     });
   };
 
