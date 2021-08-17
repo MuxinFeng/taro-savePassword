@@ -90,6 +90,10 @@ client
 
 ![效果图](https://user-images.githubusercontent.com/46584765/129559046-748be938-07d5-42a5-98d7-a0cba6bac076.png)
 
+---
+
+![二维码](https://user-images.githubusercontent.com/46584765/129651481-30d17dea-4d58-4b52-b9fe-4903e91b7546.png)
+
 [⬆️ 返回顶部](#简介)
 
 ## 参考资料
