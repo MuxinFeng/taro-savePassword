@@ -13,6 +13,7 @@ export default class Index extends Component {
       isExportExcelModalOpen: false,
       isClearAllDataModalOpen: false,
       hasClearAllData: false, //控制toast，正在清除数据
+      failForesee: false, //控制toast，预览失败
       loading: false //控制toast，正在加载
     };
   }
@@ -47,11 +48,11 @@ export default class Index extends Component {
    * 预览密码文件
    * @returns  void
    */
-  handleForesee = () => {
+  handleForesee = async () => {
     this.setState({
       loading: true
     });
-    Taro.downloadFile({
+    await Taro.downloadFile({
       url: this.tempFileURL,
       success(res) {
         if (res.statusCode === 200) {
@@ -66,6 +67,9 @@ export default class Index extends Component {
           });
         }
       }
+    }).catch(error => {
+      this.setState({});
+      console.log(error);
     });
     this.setState({
       loading: false
@@ -113,7 +117,8 @@ export default class Index extends Component {
       isExportExcelModalOpen,
       isClearAllDataModalOpen,
       hasClearAllData,
-      loading
+      loading,
+      failForesee
     } = this.state;
     return (
       <View className="index">
@@ -194,6 +199,15 @@ export default class Index extends Component {
           icon="check"
           onClose={() => {
             this.setState({ hasClearAllData: false });
+          }}
+        />
+        <AtToast
+          isOpened={failForesee}
+          text="预览失败"
+          duration={1500}
+          icon="close"
+          onClose={() => {
+            this.setState({ failForesee: false });
           }}
         />
       </View>
