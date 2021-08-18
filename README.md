@@ -1,5 +1,7 @@
 <h1 style="text-align:center">☄️彗星密码本☄️</h1>
 
+*已选入官方示例仓库[awesom-taro](https://github.com/NervJS/awesome-taro#%E7%A4%BA%E4%BE%8B%E9%A1%B9%E7%9B%AE)*
+
 ## 简介
 - 功能
     
